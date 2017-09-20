@@ -441,7 +441,7 @@
     var continueExit = true;
 
     // calling onbeforeexit callback
-    // 
+    //
     // If this callback return `false`, it would halt the process
     if (this._introBeforeExitCallback != undefined) {
       continueExit = this._introBeforeExitCallback.call(self);
@@ -726,21 +726,14 @@
     // must take up most of the screen real estate. Show the tooltip floating in the middle of the screen.
     var calculatedPosition = "floating";
 
-    // Check if the width of the tooltip + the starting point would spill off the right side of the screen
-    // If no, neither bottom or top are valid
-    if (targetOffset.left + tooltipWidth > windowSize.width || ((targetOffset.left + (targetOffset.width / 2)) - tooltipWidth) < 0) {
+    // Check for space below
+    if ((targetOffset.height + targetOffset.top + tooltipHeight) > windowSize.height) {
       _removeEntry(possiblePositions, "bottom");
-      _removeEntry(possiblePositions, "top");
-    } else {
-      // Check for space below
-      if ((targetOffset.height + targetOffset.top + tooltipHeight) > windowSize.height) {
-        _removeEntry(possiblePositions, "bottom");
-      }
+    }
 
-      // Check for space above
-      if (targetOffset.top - tooltipHeight < 0) {
-        _removeEntry(possiblePositions, "top");
-      }
+    // Check for space above
+    if (targetOffset.top - tooltipHeight < 0) {
+      _removeEntry(possiblePositions, "top");
     }
 
     // Check for space to the right
